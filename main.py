@@ -1,7 +1,25 @@
-
 from fastapi import FastAPI
-from fastapi import  status, Body
+import os
+import gdown
+from fastapi import FastAPI, status, Body
 from fastapi.responses import JSONResponse
+
+# -------------------------------------------------------------
+# 1. كود تنزيل الأوزان تلقائياً من جوجل درايف داخل فولدر best2
+# -------------------------------------------------------------
+weights_path = 'best2/model.safetensors' # المسار والاسم اللي اتفّقنا عليهم
+
+if not os.path.exists(weights_path):
+    print("📥 Railway detected missing weights. Downloading from Google Drive...")
+    # 🚨 شيل الكلمة اللي تحت وحط الـ ID الحقيقي بتاع ملف الـ safetensors من درايف
+    file_id = "11eGrKH_CflbhvD1Xi7oLuxqrEgtM3hZi"
+    url = f'https://drive.google.com/uc?id={file_id}'
+    
+    # تنزيل الملف أوتوماتيكياً داخل الفولدر جنب الـ config
+    gdown.download(url, weights_path, quiet=False)
+else:
+    print("✅ Weights already exist in best2 folder. Booting up...")
+# -------------------------------------------------------------
 
 from services.sentiment_analysis import sentiment_service
 from services.preprocessing import preprocess_text
