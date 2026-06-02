@@ -26,7 +26,7 @@ from services.preprocessing import preprocess_text
 
 app= FastAPI()
 
-from pyngrok import ngrok
+#from pyngrok import ngrok
 
 # 1. قفل أي جلسة قديمة معلقة في الخلفية
 # ngrok.kill()
